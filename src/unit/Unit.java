@@ -3,17 +3,22 @@ package unit;
 import item.Equipment;
 import item.enums.EquipTypes;
 import item.enums.Items;
+import skill.SkillState;
+import skill.enums.Skills;
 import unit.enums.StatusType;
 import unit.enums.UnitType;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Unit {
     private final UnitType type;
     private final String name;
-    private final HashMap<Items, Integer> inventory;
+    private final HashMap<Items, Integer> inventory; //value=Item quantity in inventory, key=Item type enum value.
     private final HashMap<EquipTypes, Items> equipments;
+    private final HashMap<Skills, SkillState> skills;
+    private final HashSet<Skills> onCooldownSkills = new HashSet<>();
     private Status baseStatus;
     private Status effectiveStatus;
     private int level; //현재 레벨, 1레벨부터 시작
@@ -30,11 +35,12 @@ public class Unit {
     private static final int mpMultiple = 10; //1 arc = 10 maxMp;
     private static final int weightMultiple = 10; //1 str = 10 maxWeight;
 
-    public Unit(UnitType type, String name, HashMap<Items, Integer> inventory, HashMap<EquipTypes, Items> equipments, Status baseStatus, int level) {
+    public Unit(UnitType type, String name, HashMap<Items, Integer> inventory, HashMap<EquipTypes, Items> equipments, HashMap<Skills, SkillState> skills, Status baseStatus, int level) {
         this.type = type;
         this.name = name;
         this.inventory = inventory;
         this.equipments = equipments;
+        this.skills = skills;
         this.baseStatus = baseStatus;
         this.level = level;
         this.exp = 0;
@@ -44,7 +50,7 @@ public class Unit {
     }
 
     public Unit copy() {
-        return new Unit(type, name, (HashMap<Items, Integer>) inventory.clone(), (HashMap<EquipTypes, Items>) equipments.clone(), baseStatus.copy(), level);
+        return new Unit(type, name, (HashMap<Items, Integer>) inventory.clone(), (HashMap<EquipTypes, Items>) equipments.clone(),(HashMap<Skills, SkillState>) skills.clone(), baseStatus.copy(), level);
     }
 
     public HashMap<Items, Integer> getInventory() {
@@ -175,6 +181,69 @@ public class Unit {
         }
         this.baseStatus = this.baseStatus.add(newStatus);
     }
+    public void addSkill(Skills skill, SkillState state) {
+        skills.put(skill, state);
+    }
+    public void removeSkill(Skills skill) {
+        skills.remove(skill);
+    }
+    public void clearSkills() {
+        skills.clear();
+    }
+    public void useSkillPoint(Skills skill, int quantity) {
+        if(quantity<=0) throw new IllegalArgumentException("소모하려는 스킬포인트는 1 이상이어야 합니다.");
+        if(quantity>skillPoint) throw new IllegalArgumentException("소모하려는 스킬포인트가 잔여 스킬포인트보다 많습니다.");
+        skills.get(skill).addLevel(quantity);
+        skillPoint -= quantity;
+    }
+    private int calculateDamage(Skills skill, Unit target) {
+        SkillState skillState = skills.get(skill);
+        int damage = skill.getDamagePerLevel().getOrDefault(skillState.getLevel(), 0);
+        switch (skill.getAttribute()) {
+            case PHYSICAL:
+                damage += effectiveStatus.getStr() - target.getEffectiveStatus().getVit();
+                break;
+            case MAGIC:
+                damage += effectiveStatus.getWis() - target.getEffectiveStatus().getArc();
+        }
+        return damage;
+    }
+    private int calculateHeal(Skills skill, Unit target) {
+        SkillState skillState = skills.get(skill);
+        int heal = skill.getHealPerLevel().getOrDefault(skillState.getLevel(), 0);
+        switch (skill.getAttribute()) {
+            case PHYSICAL:
+                heal += target.getEffectiveStatus().getStr();
+                break;
+            case MAGIC:
+                heal += target.getEffectiveStatus().getWis();
+        }
+        return heal;
+    }
+    public void useSkill(Skills skill, Unit target) {
+        if(onCooldownSkills.contains(skill)) throw new IllegalArgumentException("아직 쿨다운 중인 스킬이라 사용이 불가능합니다.");
+        SkillState skillState = skills.get(skill);
+        int cooldown = skill.getCooldownPerLevel().getOrDefault(skillState.getLevel(), 0);
+        switch (skill.getType() ) {
+            case DAMAGE:
+                int damage = calculateDamage(skill, target);
+                target.hp -= damage;
+                break;
+            case HEAL:
+                int heal = calculateHeal(skill, target);
+                target.hp += heal;
+                if(target.hp>target.getMaxHp()) target.hp=target.getMaxHp();
+                break;
+            case BUFF:
+                break;
+            case DEBUFF:
+                break;
+        }
+        if(cooldown>0) {
+            skillState.setLeftCooldownTime(cooldown);
+            onCooldownSkills.add(skill);
+        }
+    }
 
     public UnitType getType() {
         return type;
@@ -182,6 +251,10 @@ public class Unit {
 
     public String getName() {
         return name;
+    }
+
+    public HashMap<Skills, SkillState> getSkills() {
+        return skills;
     }
 
     public Status getBaseStatus() {
