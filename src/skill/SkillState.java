@@ -1,6 +1,6 @@
 package skill;
 
-public class SkillState{
+public class SkillState {
     private int leftCooldownTime = 0;
     private int level = 1;
 
@@ -8,6 +8,7 @@ public class SkillState{
         this.leftCooldownTime = leftCooldownTime;
         this.level = level;
     }
+
     public SkillState clone() {
         return new SkillState(leftCooldownTime, level);
     }

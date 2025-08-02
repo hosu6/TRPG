@@ -1,5 +1,6 @@
 package skill;
 
+import skill.enums.SkillTypes;
 import skill.enums.Skills;
 import status.BaseStatus;
 import status.UnitStatus;
@@ -59,6 +60,16 @@ public class SkillBox {
         BaseStatus targetEffectiveBaseStatus = target.getUnitStatus().getEffectiveBaseStatus();
         heal += casterEffectiveBaseStatus.getWis() + targetEffectiveBaseStatus.getArc();
         return heal;
+    }
+
+    public void useDamageSkillInOrder(Unit caster, Unit target) {
+        for (Skills skill : skillBox.keySet()) {
+            if (skill.getType() == SkillTypes.DAMAGE && !onCooldownSkills.contains(skill)) {
+                useSkill(skill, caster, target);
+                return;
+            }
+        }
+        System.out.println(caster.getName() + "은 현재 실행할 수 있는 스킬이 존재하지 않는다");
     }
 
     public void useSkill(Skills skill, Unit caster, Unit target) {
