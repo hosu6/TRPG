@@ -36,7 +36,7 @@ public enum Skills {
     private final Map<Integer, Integer> criticalPerLevel;
     private final Map<Integer, Integer> emptyMap;
 
-    Skills(String name, String description, SkillTypes type, SkillAttribute attribute,int maxLevel, Map<Integer, Integer> damagePerLevel, Map<Integer, Integer> healPerLevel, Map<Integer, Integer> costPerLevel, Map<Integer, Integer> cooldownPerLevel, Map<Integer, Integer> durationPerLevel, Map<Integer, Integer> rangePerLevel, Map<Integer, Integer> accuracyPerLevel, Map<Integer, Integer> criticalPerLevel) {
+    Skills(String name, String description, SkillTypes type, SkillAttribute attribute, int maxLevel, Map<Integer, Integer> damagePerLevel, Map<Integer, Integer> healPerLevel, Map<Integer, Integer> costPerLevel, Map<Integer, Integer> cooldownPerLevel, Map<Integer, Integer> durationPerLevel, Map<Integer, Integer> rangePerLevel, Map<Integer, Integer> accuracyPerLevel, Map<Integer, Integer> criticalPerLevel) {
         this.name = name;
         this.description = description;
         this.type = type;

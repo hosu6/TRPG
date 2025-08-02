@@ -39,8 +39,7 @@ public enum ItemTypes {
     MONSTER_BYPRODUCT("Monster Byproduct", ItemCategorys.MISC, EquipTypes.NOT_EQUITABLE),
 
     // 기타 (MISC)
-    MISCELLANEOUS("Miscellaneous", ItemCategorys.MISC, EquipTypes.NOT_EQUITABLE)
-    ;
+    MISCELLANEOUS("Miscellaneous", ItemCategorys.MISC, EquipTypes.NOT_EQUITABLE);
 
     private final String name; // 아이템의 사용자 친화적인 이름
     private final ItemCategorys category; // 아이템 분류 (무기, 방어구 등)

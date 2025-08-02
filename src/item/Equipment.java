@@ -1,18 +1,18 @@
 package item;
 
 import item.enums.ItemTypes;
-import unit.Status;
+import status.BaseStatus;
 
-public class Equipment extends Item{
+public class Equipment extends Item {
     private final int atk;
     private final int def;
-    private final Status status; //스테이터스 보정치
+    private final BaseStatus baseStatus; //스테이터스 보정치
 
-    public Equipment(String name, double weight, int value, ItemTypes itemType, int atk, int def, Status status) {
+    public Equipment(String name, double weight, int value, ItemTypes itemType, int atk, int def, BaseStatus baseStatus) {
         super(name, weight, value, itemType);
         this.atk = atk;
         this.def = def;
-        this.status = status;
+        this.baseStatus = baseStatus;
     }
 
     public int getAtk() {
@@ -23,7 +23,7 @@ public class Equipment extends Item{
         return def;
     }
 
-    public Status getStatus() {
-        return status.copy();
+    public BaseStatus getStatus() {
+        return baseStatus.clone();
     }
 }

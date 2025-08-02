@@ -1,6 +1,6 @@
-package unit;
+package status;
 
-public class Status {
+public class BaseStatus {
     private final int vit; //vitality
     private final int arc; //arcane power
     private final int str; //strength
@@ -12,11 +12,12 @@ public class Status {
 
     private final int bonusMaxHp;
     private final int bonusMaxMp;
+    private final int bonusMaxSp;
     private final int bonusMaxWeight;
 
-    public static final Status EMPTY_STATUS = new Status(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    public static final BaseStatus EMPTY_BASE_STATUS = new BaseStatus(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    public Status(int vit, int arc, int str, int sta, int agi, int wis, int luk, int cha, int bonusMaxHp, int bonusMaxMp, int bonusMaxWeight) {
+    public BaseStatus(int vit, int arc, int str, int sta, int agi, int wis, int luk, int cha, int bonusMaxHp, int bonusMaxMp, int bonusMaxSp, int bonusMaxWeight) {
         this.vit = vit;
         this.arc = arc;
         this.str = str;
@@ -27,16 +28,18 @@ public class Status {
         this.cha = cha;
         this.bonusMaxHp = bonusMaxHp;
         this.bonusMaxMp = bonusMaxMp;
+        this.bonusMaxSp = bonusMaxSp;
         this.bonusMaxWeight = bonusMaxWeight;
     }
 
-    public Status copy() {
-        return new Status(vit, arc, str, sta, agi, wis, luk, cha, bonusMaxHp, bonusMaxMp, bonusMaxWeight);
+    @Override
+    public BaseStatus clone() {
+        return new BaseStatus(vit, arc, str, sta, agi, wis, luk, cha, bonusMaxHp, bonusMaxMp, bonusMaxSp, bonusMaxWeight);
     }
 
     // 새로운 Status 객체를 반환하는 add 메서드 (원본을 변경하지 않음)
-    public Status add(Status other) {
-        return new Status(
+    public BaseStatus add(BaseStatus other) {
+        return new BaseStatus(
                 this.vit + other.vit,
                 this.arc + other.arc,
                 this.str + other.str,
@@ -47,6 +50,7 @@ public class Status {
                 this.cha + other.cha,
                 this.bonusMaxHp + other.bonusMaxHp,
                 this.bonusMaxMp + other.bonusMaxMp,
+                this.bonusMaxSp + other.bonusMaxSp,
                 this.bonusMaxWeight + other.bonusMaxWeight
         );
     }
@@ -93,5 +97,9 @@ public class Status {
 
     public int getBonusMaxWeight() {
         return bonusMaxWeight;
+    }
+
+    public int getBonusMaxSp() {
+        return bonusMaxSp;
     }
 }

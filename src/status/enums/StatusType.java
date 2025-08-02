@@ -1,4 +1,4 @@
-package unit.enums;
+package status.enums;
 
 public enum StatusType {
     VIT,
