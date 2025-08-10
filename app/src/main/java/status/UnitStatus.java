@@ -1,5 +1,7 @@
 package status;
 
+import exception.common.NotEnoughQuantityException;
+import exception.common.QuantityUnderZeroException;
 import item.Equipment;
 import item.EquipmentBox;
 import item.enums.Items;
@@ -75,9 +77,9 @@ public class UnitStatus {
     }
 
     //return boolean for checking level up
-    public boolean changeExp(int exp) {
-        if (this.exp + exp < 0) throw new IllegalArgumentException("유닛의 경험치는 0미만으로 감소할 수 없습니다.");
-        this.exp += exp;
+    public boolean changeExp(int quantity) {
+        if (this.exp + quantity < 0) throw new QuantityUnderZeroException("유닛의 경험치는 0미만으로 감소할 수 없습니다.");
+        this.exp += quantity;
         if (this.exp >= maxExp) {
             this.level++;
             this.statPoint += 5;
@@ -88,8 +90,8 @@ public class UnitStatus {
     }
 
     public void useStatPoint(StatusType type, int quantity) {
-        if (quantity > this.statPoint) throw new IllegalArgumentException("사용하려 하는 스텟포인트가 잔여 스테이터스 포인트보다 적습니다.");
-        if (quantity <= 0) throw new IllegalArgumentException("사용하려 하는 스탯포인트는 1 이상이어야 합니다.");
+        if (quantity > this.statPoint) throw new NotEnoughQuantityException("사용하려 하는 스텟포인트가 잔여 스테이터스 포인트보다 적습니다.");
+        if (quantity <= 0) throw new QuantityUnderZeroException("사용하려 하는 스탯포인트는 1 이상이어야 합니다.");
         BaseStatus newBaseStatus = BaseStatus.EMPTY_BASE_STATUS;
         switch (type) {
             case VIT:

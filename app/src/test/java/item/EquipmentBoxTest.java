@@ -2,7 +2,6 @@ package item;
 
 import item.enums.EquipTypes;
 import item.enums.Items;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -72,6 +71,17 @@ class EquipmentBoxTest {
                 assertSame(Items.NONE, equipmentBox.get(type), type + " 슬롯은 비어 있어야 합니다.");
             }
         }
+    }
+
+    @Test
+    void addEquipment_ShouldThrowExceptionIfSlotIsFull() {
+        //given
+        Items ironArmor = Items.IRON_ARMOR;
+        equipmentBox.addEquipment(ironArmor);
+
+        //when & then
+
+
     }
 
     @Test

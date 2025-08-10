@@ -40,24 +40,16 @@ public class UnitBox {
     }
 
     public void attackTarget(Unit target) {
-        try {
-            for (Unit unit : unitBox) {
-                unit.getSkillBox().useDamageSkillInOrder(unit, target);
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        for (Unit unit : unitBox) {
+            unit.getSkillBox().useDamageSkillInOrder(unit, target);
         }
     }
 
     public void attackTargets(UnitBox targetBox) {
-        try {
-            for (Unit unit : unitBox) {
-                Unit target = targetBox.getNextAliveUnit();
-                if (target == null) break;
-                unit.getSkillBox().useDamageSkillInOrder(unit, target);
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        for (Unit unit : unitBox) {
+            Unit target = targetBox.getNextAliveUnit();
+            if (target == null) break;
+            unit.getSkillBox().useDamageSkillInOrder(unit, target);
         }
     }
 

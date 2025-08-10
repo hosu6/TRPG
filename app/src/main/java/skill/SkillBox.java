@@ -1,5 +1,11 @@
 package skill;
 
+import exception.common.NotEnoughQuantityException;
+import exception.common.QuantityUnderZeroException;
+import exception.skill.AccessNotExistSkillException;
+import exception.skill.UseSkillOnCoolTimeException;
+import exception.skill.UseSkillWithNotEnoughMpException;
+import exception.skill.UseSkillWithNotEnoughSpException;
 import skill.enums.SkillTypes;
 import skill.enums.Skills;
 import status.BaseStatus;
@@ -33,8 +39,8 @@ public class SkillBox {
     }
 
     public void levelUpSkill(Skills skill, int quantity) {
-        if (quantity <= 0) throw new IllegalArgumentException("소모하려는 스킬포인트는 1 이상이어야 합니다.");
-        if (quantity > skillPoint) throw new IllegalArgumentException("소모하려는 스킬포인트가 잔여 스킬포인트보다 많습니다.");
+        if (quantity <= 0) throw new QuantityUnderZeroException("소모하려는 스킬포인트는 1 이상이어야 합니다.");
+        if (quantity > skillPoint) throw new NotEnoughQuantityException("소모하려는 스킬포인트가 잔여 스킬포인트보다 많습니다.");
         skillBox.get(skill).addLevel(quantity);
         skillPoint -= quantity;
     }
@@ -70,22 +76,22 @@ public class SkillBox {
                 return;
             }
         }
-        throw new IllegalArgumentException(caster.getName() + "은 현재 실행할 수 있는 스킬이 존재하지 않는다");
+        throw new AccessNotExistSkillException(caster.getName() + "은 현재 실행할 수 있는 스킬이 존재하지 않는다");
     }
 
     public void useSkill(Skills skill, Unit caster, Unit target) {
-        if (onCooldownSkills.contains(skill)) throw new IllegalArgumentException("아직 쿨다운 중인 스킬이라 사용이 불가능합니다.");
+        if (onCooldownSkills.contains(skill)) throw new UseSkillOnCoolTimeException("아직 쿨다운 중인 스킬이라 사용이 불가능합니다.");
         SkillState skillState = skillBox.get(skill);
         UnitStatus casterUnitStatus = caster.getUnitStatus();
         UnitStatus targetUnitStatus = target.getUnitStatus();
         int cost = skill.getCostPerLevel().getOrDefault(skillState.getLevel(), 0);
         switch (skill.getAttribute()) {
             case PHYSICAL:
-                if (casterUnitStatus.getSp() < cost) throw new IllegalArgumentException("스킬을 시전하기에 SP가 모자랍니다.");
+                if (casterUnitStatus.getSp() < cost) throw new UseSkillWithNotEnoughSpException("스킬을 시전하기에 SP가 모자랍니다.");
                 casterUnitStatus.changeSp(-1 * cost);
                 break;
             case MAGIC:
-                if (casterUnitStatus.getMp() < cost) throw new IllegalArgumentException("스킬을 시전하기에 MP가 모자랍니다.");
+                if (casterUnitStatus.getMp() < cost) throw new UseSkillWithNotEnoughMpException("스킬을 시전하기에 MP가 모자랍니다.");
                 casterUnitStatus.changeMp(-1 * cost);
                 break;
         }

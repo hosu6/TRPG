@@ -42,47 +42,33 @@ public class Unit {
             System.out.println(item.getItem().getName() + "은(는) 장착할 수 없는 아이템입니다.");
             return;
         }
-        try {
-            // 해당 슬롯에 이미 장비가 있다면 인벤토리로 되돌림
-            removeEquipment(equipType);
-            if(equipType.equals(EquipTypes.TWO_HAND)){
-                removeEquipment(EquipTypes.MAIN_HAND);
-                removeEquipment(EquipTypes.OFF_HAND);
-            } else if(equipType.equals(EquipTypes.MAIN_HAND) || equipType.equals(EquipTypes.OFF_HAND)){
-                removeEquipment(EquipTypes.TWO_HAND);
-            }
-            equipmentBox.addEquipment(item);
-            itemBox.removeInventoryItem(item, 1);
-            updateUnitStatus();
-            System.out.println(item.getItem().getName() + "을(를) 장착했습니다.");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        // 해당 슬롯에 이미 장비가 있다면 인벤토리로 되돌림
+        removeEquipment(equipType);
+        if (equipType.equals(EquipTypes.TWO_HAND)) {
+            removeEquipment(EquipTypes.MAIN_HAND);
+            removeEquipment(EquipTypes.OFF_HAND);
+        } else if (equipType.equals(EquipTypes.MAIN_HAND) || equipType.equals(EquipTypes.OFF_HAND)) {
+            removeEquipment(EquipTypes.TWO_HAND);
         }
+        equipmentBox.addEquipment(item);
+        itemBox.removeInventoryItem(item, 1);
+        updateUnitStatus();
+        System.out.println(item.getItem().getName() + "을(를) 장착했습니다.");
     }
 
     public void removeEquipment(EquipTypes type) {
-        try {
-            Items itemToRemove = equipmentBox.get(type);
-            equipmentBox.removeEquipment(type);
-            itemBox.addInventoryItem(itemToRemove, 1);
-            updateUnitStatus();
-            System.out.println(itemToRemove.getItem().getName() + "을(를) 벗어 인벤토리로 이동했습니다.");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println(type + "장비를 벗는데 실패하거나 장착효과를 반영하는데 실패하였습니다.");
-        }
+        Items itemToRemove = equipmentBox.get(type);
+        equipmentBox.removeEquipment(type);
+        itemBox.addInventoryItem(itemToRemove, 1);
+        updateUnitStatus();
+        System.out.println(itemToRemove.getItem().getName() + "을(를) 벗어 인벤토리로 이동했습니다.");
     }
 
     public void removeAllEquipment() {
-        try {
-            for (EquipTypes types : equipmentBox.getAllEquipTypes()) {
-                removeEquipment(types);
-            }
-            System.out.println("모든 장비를 벗는데 성공하였습니다.");
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("모든 장비를 벗는데 실패하였습니다.");
+        for (EquipTypes types : equipmentBox.getAllEquipTypes()) {
+            removeEquipment(types);
         }
+        System.out.println("모든 장비를 벗는데 성공하였습니다.");
     }
 
     public void changeUnitMutableStatus(UnitMutableStatusType type, int value) {
