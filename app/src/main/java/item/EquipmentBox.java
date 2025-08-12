@@ -2,7 +2,6 @@ package item;
 
 import exception.item.AccessNotExistItemException;
 import exception.item.AlreadyEquippedItemException;
-import exception.item.NotEquitableItemException;
 import exception.item.TwoHandedWeaponConflictException;
 import item.enums.EquipTypes;
 import item.enums.items.Equipments;
@@ -21,9 +20,6 @@ public class EquipmentBox {
 
     public EquipmentBox() {
         this.equipmentBox = new HashMap<>();
-        for (EquipTypes equipType : EquipTypes.values()) {
-            equipmentBox.put(equipType, Equipments.NONE);
-        }
     }
 
     public EquipmentBox copy() {
@@ -46,6 +42,10 @@ public class EquipmentBox {
         return equipmentBox.values();
     }
 
+    public int getCount() {
+        return equipmentBox.size();
+    }
+
     public Equipments get(EquipTypes type) {
         return equipmentBox.get(type);
     }
@@ -63,8 +63,6 @@ public class EquipmentBox {
             throw new AlreadyEquippedItemException("이미 " + equipType.name() + "장비가 장착되어 있습니다.");
         }
         switch (equipType) {
-            case EquipTypes.NOT_EQUITABLE:
-                throw new NotEquitableItemException(equipment.getName() + "은(는) 장착할 수 없는 아이템입니다.");
             case EquipTypes.MAIN_HAND, EquipTypes.OFF_HAND:
                 if (twoHandItem != null)
                     throw new TwoHandedWeaponConflictException("이미 양손무기를 장착한 상태에서 한손 무기나 보조 무기는 장착할 수 없습니다.");
@@ -78,9 +76,6 @@ public class EquipmentBox {
     }
 
     public void removeEquipment(EquipTypes type) {
-        if (type == EquipTypes.NOT_EQUITABLE) {
-            throw new NotEquitableItemException(EquipTypes.NOT_EQUITABLE + "장비는 착용/착용 해제가 불가합니다.");
-        }
         if (!equipmentBox.containsKey(type)) {
             throw new AccessNotExistItemException(type + "슬롯에 장착된 장비가 없습니다");
         }

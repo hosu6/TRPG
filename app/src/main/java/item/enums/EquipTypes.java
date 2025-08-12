@@ -16,8 +16,5 @@ public enum EquipTypes {
     // 장신구 장착 슬롯
     NECK,           // 목 (목걸이)
     FINGER,         // 손가락 (반지)
-
-    // 장착 불가능
-    NOT_EQUITABLE   // 장착할 수 없는 아이템 (물약, 음식, 재료 등)
     ;
 }

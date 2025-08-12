@@ -1,6 +1,5 @@
 package unit;
 
-import exception.item.NotEquitableItemException;
 import item.EquipmentBox;
 import item.ItemBox;
 import item.enums.EquipTypes;
@@ -38,9 +37,6 @@ public class Unit {
 
     public void addEquipment(Equipments equipment) {
         EquipTypes equipType = equipment.getEquipType();
-        if (equipType == EquipTypes.NOT_EQUITABLE) {
-            throw new NotEquitableItemException(equipment.getName() + "은(는) 장착할 수 없는 아이템입니다.");
-        }
         // 해당 슬롯에 이미 장비가 있다면 인벤토리로 되돌림
         removeEquipment(equipType);
         if (equipType.equals(EquipTypes.TWO_HAND)) {
