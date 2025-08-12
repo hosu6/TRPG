@@ -25,11 +25,10 @@ public class SkillBox {
         this.skillBox = skillBox;
     }
 
-    @Override
-    public SkillBox clone() {
+    public SkillBox copy() {
         HashMap<Skills, SkillState> clonedSkillBox = new HashMap<>();
         for (HashMap.Entry<Skills, SkillState> entry : skillBox.entrySet()) {
-            clonedSkillBox.put(entry.getKey(), entry.getValue().clone());
+            clonedSkillBox.put(entry.getKey(), entry.getValue().copy());
         }
         return new SkillBox(clonedSkillBox);
     }
@@ -52,10 +51,10 @@ public class SkillBox {
         BaseStatus targetEffectiveBaseStatus = target.getUnitStatus().getEffectiveBaseStatus();
         switch (skill.getAttribute()) {
             case PHYSICAL:
-                damage += casterEffectiveBaseStatus.getStr() - targetEffectiveBaseStatus.getVit();
+                damage += casterEffectiveBaseStatus.getAtk() + casterEffectiveBaseStatus.getStr() - targetEffectiveBaseStatus.getVit() - targetEffectiveBaseStatus.getDef();
                 break;
             case MAGIC:
-                damage += casterEffectiveBaseStatus.getWis() - targetEffectiveBaseStatus.getArc();
+                damage += casterEffectiveBaseStatus.getAtk() + casterEffectiveBaseStatus.getWis() - targetEffectiveBaseStatus.getArc() - targetEffectiveBaseStatus.getDef();
         }
         return damage;
     }

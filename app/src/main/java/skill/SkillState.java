@@ -11,7 +11,7 @@ public class SkillState {
         this.level = level;
     }
 
-    public SkillState clone() {
+    public SkillState copy() {
         return new SkillState(leftCooldownTime, level);
     }
 

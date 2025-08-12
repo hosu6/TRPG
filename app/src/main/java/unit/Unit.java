@@ -1,9 +1,10 @@
 package unit;
 
+import exception.item.NotEquitableItemException;
 import item.EquipmentBox;
 import item.ItemBox;
 import item.enums.EquipTypes;
-import item.enums.Items;
+import item.enums.items.Equipments;
 import skill.SkillBox;
 import status.UnitStatus;
 import status.enums.UnitMutableStatusType;
@@ -31,16 +32,14 @@ public class Unit {
         this.unitStatus.updateEffectiveStatus(equipmentBox);
     }
 
-    @Override
-    public Unit clone() {
-        return new Unit(type, name, itemBox.clone(), equipmentBox.clone(), skillBox.clone(), unitStatus.clone());
+    public Unit copy() {
+        return new Unit(type, name, itemBox.copy(), equipmentBox.copy(), skillBox.copy(), unitStatus.copy());
     }
 
-    public void addEquipment(Items item) {
-        EquipTypes equipType = item.getItem().getItemType().getEquipType();
+    public void addEquipment(Equipments equipment) {
+        EquipTypes equipType = equipment.getEquipType();
         if (equipType == EquipTypes.NOT_EQUITABLE) {
-            System.out.println(item.getItem().getName() + "은(는) 장착할 수 없는 아이템입니다.");
-            return;
+            throw new NotEquitableItemException(equipment.getName() + "은(는) 장착할 수 없는 아이템입니다.");
         }
         // 해당 슬롯에 이미 장비가 있다면 인벤토리로 되돌림
         removeEquipment(equipType);
@@ -50,18 +49,18 @@ public class Unit {
         } else if (equipType.equals(EquipTypes.MAIN_HAND) || equipType.equals(EquipTypes.OFF_HAND)) {
             removeEquipment(EquipTypes.TWO_HAND);
         }
-        equipmentBox.addEquipment(item);
-        itemBox.removeInventoryItem(item, 1);
+        equipmentBox.addEquipment(equipment);
+        itemBox.removeInventoryItem(equipment, 1);
         updateUnitStatus();
-        System.out.println(item.getItem().getName() + "을(를) 장착했습니다.");
+        System.out.println(equipment.getName() + "을(를) 장착했습니다.");
     }
 
     public void removeEquipment(EquipTypes type) {
-        Items itemToRemove = equipmentBox.get(type);
+        Equipments equipment = equipmentBox.get(type);
         equipmentBox.removeEquipment(type);
-        itemBox.addInventoryItem(itemToRemove, 1);
+        itemBox.addInventoryItem(equipment, 1);
         updateUnitStatus();
-        System.out.println(itemToRemove.getItem().getName() + "을(를) 벗어 인벤토리로 이동했습니다.");
+        System.out.println(equipment.getName() + "을(를) 벗어 인벤토리로 이동했습니다.");
     }
 
     public void removeAllEquipment() {

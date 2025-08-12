@@ -9,15 +9,17 @@ public class BaseStatus {
     private final int wis; //wisdom
     private final int luk; //luck
     private final int cha; //charisma
+    private final int atk; //attack(장비에 종속된 스테이터스)
+    private final int def; //defence(장비에 종속된 스테이터스)
 
     private final int bonusMaxHp;
     private final int bonusMaxMp;
     private final int bonusMaxSp;
     private final int bonusMaxWeight;
 
-    public static final BaseStatus EMPTY_BASE_STATUS = new BaseStatus(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    public static final BaseStatus EMPTY_BASE_STATUS = new BaseStatus(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-    public BaseStatus(int vit, int arc, int str, int sta, int agi, int wis, int luk, int cha, int bonusMaxHp, int bonusMaxMp, int bonusMaxSp, int bonusMaxWeight) {
+    public BaseStatus(int vit, int arc, int str, int sta, int agi, int wis, int luk, int cha, int atk, int def, int bonusMaxHp, int bonusMaxMp, int bonusMaxSp, int bonusMaxWeight) {
         this.vit = vit;
         this.arc = arc;
         this.str = str;
@@ -26,15 +28,16 @@ public class BaseStatus {
         this.wis = wis;
         this.luk = luk;
         this.cha = cha;
+        this.atk = atk;
+        this.def = def;
         this.bonusMaxHp = bonusMaxHp;
         this.bonusMaxMp = bonusMaxMp;
         this.bonusMaxSp = bonusMaxSp;
         this.bonusMaxWeight = bonusMaxWeight;
     }
 
-    @Override
-    public BaseStatus clone() {
-        return new BaseStatus(vit, arc, str, sta, agi, wis, luk, cha, bonusMaxHp, bonusMaxMp, bonusMaxSp, bonusMaxWeight);
+    public BaseStatus copy() {
+        return new BaseStatus(vit, arc, str, sta, agi, wis, luk, cha, atk, def, bonusMaxHp, bonusMaxMp, bonusMaxSp, bonusMaxWeight);
     }
 
     // 새로운 Status 객체를 반환하는 add 메서드 (원본을 변경하지 않음)
@@ -48,6 +51,8 @@ public class BaseStatus {
                 this.wis + other.wis,
                 this.luk + other.luk,
                 this.cha + other.cha,
+                this.atk + other.atk,
+                this.def + other.def,
                 this.bonusMaxHp + other.bonusMaxHp,
                 this.bonusMaxMp + other.bonusMaxMp,
                 this.bonusMaxSp + other.bonusMaxSp,
@@ -101,5 +106,13 @@ public class BaseStatus {
 
     public int getBonusMaxSp() {
         return bonusMaxSp;
+    }
+
+    public int getAtk() {
+        return atk;
+    }
+
+    public int getDef() {
+        return def;
     }
 }

@@ -2,9 +2,8 @@ package status;
 
 import exception.common.NotEnoughQuantityException;
 import exception.common.QuantityUnderZeroException;
-import item.Equipment;
 import item.EquipmentBox;
-import item.enums.Items;
+import item.enums.items.Equipments;
 import status.enums.StatusType;
 
 public class UnitStatus {
@@ -34,17 +33,14 @@ public class UnitStatus {
         this.statPoint = 0;
     }
 
-    public UnitStatus clone() {
-        return new UnitStatus(baseStatus.clone(), level);
+    public UnitStatus copy() {
+        return new UnitStatus(baseStatus.copy(), level);
     }
 
     public void updateEffectiveStatus(EquipmentBox equipmentBox) {
-        BaseStatus effectiveBaseStatus = baseStatus.clone();
-        for (Items item : equipmentBox.getAllEquipments()) {
-            if (item.getItem() instanceof Equipment) {
-                Equipment equipment = (Equipment) item.getItem();
-                effectiveBaseStatus = effectiveBaseStatus.add(equipment.getStatus());
-            }
+        BaseStatus effectiveBaseStatus = baseStatus.copy();
+        for (Equipments equipment : equipmentBox.getAllEquipments()) {
+            effectiveBaseStatus = effectiveBaseStatus.add(equipment.getStatus());
         }
         this.effectiveBaseStatus = effectiveBaseStatus;
         this.maxHp = effectiveBaseStatus.getBonusMaxHp() + effectiveBaseStatus.getVit() * hpMultiple;
@@ -95,28 +91,28 @@ public class UnitStatus {
         BaseStatus newBaseStatus = BaseStatus.EMPTY_BASE_STATUS;
         switch (type) {
             case VIT:
-                newBaseStatus = new BaseStatus(quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case ARC:
-                newBaseStatus = new BaseStatus(0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case STR:
-                newBaseStatus = new BaseStatus(0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case STA:
-                newBaseStatus = new BaseStatus(0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case AGI:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case WIS:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case LUK:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0);
                 break;
             case CHA:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0);
+                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0);
                 break;
         }
         this.baseStatus = this.baseStatus.add(newBaseStatus);
