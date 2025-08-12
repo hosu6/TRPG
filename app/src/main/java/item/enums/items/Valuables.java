@@ -3,6 +3,7 @@ package item.enums.items;
 import item.interfaces.Item;
 
 public enum Valuables implements Item {
+    GOLD_STATUE("금 조각상", "화려하게 장식된 금 조각상이다.", 10.0, 10000),
     ;
     private String name;
     private String info;

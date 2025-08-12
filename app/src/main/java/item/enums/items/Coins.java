@@ -2,16 +2,18 @@ package item.enums.items;
 
 import item.interfaces.Item;
 
-public enum Consumables implements Item {
-    RED_POTION("빨간약", "체력 회복용 포션", 0.5, 10),
-    BLUE_POTION("파란약", "마나 회복용 포션", 0.5, 20),
-    ;
+public enum Coins implements Item {
+    COPPER_COIN("동화", "가장 낮은 가치의 화폐", 0.1, 1),
+    SILVER_COIN("은화", "중간 가치의 화폐", 0.2, 100),
+    GOLD_COIN("금화", "높은 가치의 화폐", 0.3, 10000),
+    PLATINUM_COIN("백금화", "최고 가치의 화폐", 0.4, 1000000);
+
     private String name;
     private String info;
     private double weight;
     private int value;
 
-    Consumables(String name, String info, double weight, int value) {
+    Coins(String name, String info, double weight, int value) {
         this.name = name;
         this.info = info;
         this.weight = weight;
@@ -20,21 +22,21 @@ public enum Consumables implements Item {
 
     @Override
     public String getName() {
-        return "";
+        return name;
     }
 
     @Override
     public String getInfo() {
-        return "";
+        return info;
     }
 
     @Override
     public int getValue() {
-        return 0;
+        return value;
     }
 
     @Override
     public double getWeight() {
-        return 0;
+        return weight;
     }
 }
