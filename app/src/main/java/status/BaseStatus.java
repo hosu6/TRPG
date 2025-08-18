@@ -19,6 +19,104 @@ public class BaseStatus {
 
     public static final BaseStatus EMPTY_BASE_STATUS = new BaseStatus(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
+    private static final double SCALE = 0.2;
+    private static final double RANDOM_SCALE = 5;
+
+    public static BaseStatus tankStatusAtLevel(int level) {
+        return new BaseStatus(
+                (int) (SCALE * 39 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 7 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 20 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                0,
+                0,
+                0,
+                0
+        );
+    }
+
+    public static BaseStatus meleeDpsStatusAtLevel(int level) {
+        return new BaseStatus(
+                (int) (SCALE * 25 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 36 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 5 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                0,
+                0,
+                0,
+                0
+        );
+    }
+
+    public static BaseStatus rangedDpsStatusAtLevel(int level) {
+        return new BaseStatus(
+                (int) (SCALE * 25 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 16 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 21 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 5 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                0,
+                0,
+                0,
+                0
+        );
+    }
+
+    public static BaseStatus casterStatusAtLevel(int level) {
+        return new BaseStatus(
+                (int) (SCALE * 25 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 26 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 16 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 5 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                0,
+                0,
+                0,
+                0
+        );
+    }
+
+    public static BaseStatus rogueStatusAtLevel(int level) {
+        return new BaseStatus(
+                (int) (SCALE * 25 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 11 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 21 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 6 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 1 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                (int) (SCALE * 5 + (0.5 + Math.random()) * RANDOM_SCALE) * level,
+                0,
+                0,
+                0,
+                0
+        );
+    }
+
     public BaseStatus(int vit, int arc, int str, int sta, int agi, int wis, int luk, int cha, int atk, int def, int bonusMaxHp, int bonusMaxMp, int bonusMaxSp, int bonusMaxWeight) {
         this.vit = vit;
         this.arc = arc;

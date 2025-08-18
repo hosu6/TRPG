@@ -9,6 +9,7 @@ public enum Equipments implements Item {
     SWORD("검", "가장 대표적인 한손 무기.", 3.0, 50, EquipTypes.MAIN_HAND, new BaseStatus(0, 0, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0)),
     SHIELD("방패", "공격을 막아내는 기본적인 방어구.", 5.0, 40, EquipTypes.OFF_HAND, new BaseStatus(2, 0, 0, 0, 0, 0, 0, 0, 0, 8, 10, 0, 0, 0)),
     GREAT_SWORD("대검", "강력한 위력을 지닌 양손 무기.", 7.5, 150, EquipTypes.TWO_HAND, new BaseStatus(0, 0, 5, 0, -1, 0, 0, 0, 25, 0, 0, 0, 0, 0)),
+    BOW("활", "원거리 물리 공격이 가능한 양손 활.", 4.5, 100, EquipTypes.TWO_HAND, new BaseStatus(0, 0, 0, 0, 10, 0, 0, 0, 15, 0, 0, 0, 0, 0)),
     HELMET("투구", "머리를 보호하는 투구.", 3.5, 45, EquipTypes.HEAD, new BaseStatus(2, 0, 0, 0, -1, 0, 0, 0, 0, 6, 10, 0, 0, 0)),
     ARMOR("갑옷", "몸통을 보호하는 갑옷.", 15.0, 200, EquipTypes.TORSO, new BaseStatus(3, 0, 0, 0, -2, 0, 0, 0, 0, 20, 20, 0, 0, 0)),
     GREAVES("각반", "다리를 보호하는 갑옷.", 8.0, 120, EquipTypes.LEGS, new BaseStatus(2, 0, 0, 0, -1, 0, 0, 0, 0, 10, 10, 0, 0, 0)),
