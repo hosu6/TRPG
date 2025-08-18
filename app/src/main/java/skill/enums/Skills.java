@@ -7,13 +7,34 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public enum Skills {
-    BASIC_ATTACK("기본공격", "무기가 제공하는 기본공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
-            createUnmodifiableMap(10, i -> i), // 1~10의 키, 값은 1~10
-            null, null, null, null,
-            createUnmodifiableMap(10, i -> 1), // 1~10의 키, 값은 모두 1
+    BASIC_ATTACK("기본공격", "기본공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
+            createUnmodifiableMap(10, i -> i),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 1)),
-    ;
+    HARD_ATTACK("강타", "무기를 강하게 사용하는 공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
+            createUnmodifiableMap(10, i -> 2 * i),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> i),
+            createUnmodifiableMap(10, i -> 1),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 2),
+            createUnmodifiableMap(10, i -> 1),
+            createUnmodifiableMap(10, i -> 1)),
+    BREATH("브레스공격", "강렬한 화염을 내뿜는 용의 숨결", SkillTypes.DAMAGE, SkillAttribute.MAGIC, 10,
+            createUnmodifiableMap(10, i -> 10 * i),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 5 * i),
+            createUnmodifiableMap(10, i -> 5),
+            createUnmodifiableMap(10, i -> 1),
+            createUnmodifiableMap(10, i -> 5 * i),
+            createUnmodifiableMap(10, i -> 5 * i),
+            createUnmodifiableMap(10, i -> 5 * i)
+    );
 
     private static Map<Integer, Integer> createUnmodifiableMap(int maxLevel, Function<Integer, Integer> valueMapper) {
         return IntStream.rangeClosed(1, maxLevel)

@@ -37,6 +37,11 @@ public class UnitStatus {
         return new UnitStatus(baseStatus.copy(), level);
     }
 
+    public UnitStatus copyWithLevel(int level) {
+        double scale = level / (double) this.level;
+        return new UnitStatus(baseStatus.copyWithScale(scale), level);
+    }
+
     public void updateEffectiveStatus(EquipmentBox equipmentBox) {
         BaseStatus effectiveBaseStatus = baseStatus.copy();
         for (Equipments equipment : equipmentBox.getAllEquipments()) {

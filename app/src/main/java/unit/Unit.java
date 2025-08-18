@@ -35,6 +35,10 @@ public class Unit {
         return new Unit(type, name, itemBox.copy(), equipmentBox.copy(), skillBox.copy(), unitStatus.copy());
     }
 
+    public Unit copyWithLevel(int level) {
+        return new Unit(type, name, itemBox.copy(), equipmentBox.copy(), skillBox.copy(), unitStatus.copyWithLevel(level));
+    }
+
     public void addEquipment(Equipments equipment) {
         EquipTypes equipType = equipment.getEquipType();
         // 해당 슬롯에 이미 장비가 있다면 인벤토리로 되돌림

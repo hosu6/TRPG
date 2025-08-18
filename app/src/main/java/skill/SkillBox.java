@@ -25,6 +25,17 @@ public class SkillBox {
         this.skillBox = skillBox;
     }
 
+    public SkillBox() {
+        skillBox = new HashMap<>();
+        skillBox.put(Skills.BASIC_ATTACK, new SkillState(0, 1));
+    }
+
+    public SkillBox(Skills skill, int level) {
+        skillBox = new HashMap<>();
+        skillBox.put(skill, new SkillState(0, level));
+        skillBox.put(Skills.BASIC_ATTACK, new SkillState(0, level));
+    }
+
     public SkillBox copy() {
         HashMap<Skills, SkillState> clonedSkillBox = new HashMap<>();
         for (HashMap.Entry<Skills, SkillState> entry : skillBox.entrySet()) {

@@ -40,6 +40,25 @@ public class BaseStatus {
         return new BaseStatus(vit, arc, str, sta, agi, wis, luk, cha, atk, def, bonusMaxHp, bonusMaxMp, bonusMaxSp, bonusMaxWeight);
     }
 
+    public BaseStatus copyWithScale(double scale) {
+        return new BaseStatus(
+                (int) (vit * scale),
+                (int) (arc * scale),
+                (int) (str * scale),
+                (int) (sta * scale),
+                (int) (agi * scale),
+                (int) (wis * scale),
+                (int) (luk * scale),
+                (int) (cha * scale),
+                (int) (atk * scale),
+                (int) (def * scale),
+                (int) (bonusMaxHp * scale),
+                (int) (bonusMaxMp * scale),
+                (int) (bonusMaxSp * scale),
+                (int) (bonusMaxWeight * scale)
+        );
+    }
+
     // 새로운 Status 객체를 반환하는 add 메서드 (원본을 변경하지 않음)
     public BaseStatus add(BaseStatus other) {
         return new BaseStatus(
