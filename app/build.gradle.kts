@@ -21,6 +21,11 @@ dependencies {
     implementation(libs.guava)
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.12.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.12.1")
+    //lombok
+    compileOnly("org.projectlombok:lombok:1.18.38")
+    annotationProcessor("org.projectlombok:lombok:1.18.38")
+    testCompileOnly("org.projectlombok:lombok:1.18.38")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
 }
 
 testing {
