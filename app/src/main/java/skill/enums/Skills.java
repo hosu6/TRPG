@@ -1,11 +1,14 @@
 package skill.enums;
 
+import lombok.Getter;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Getter
 public enum Skills {
     BASIC_ATTACK("기본공격", "기본공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
             createUnmodifiableMap(10, i -> i),
@@ -74,57 +77,5 @@ public enum Skills {
         this.rangePerLevel = Objects.requireNonNullElse(rangePerLevel, this.emptyMap);
         this.accuracyPerLevel = Objects.requireNonNullElse(accuracyPerLevel, this.emptyMap);
         this.criticalPerLevel = Objects.requireNonNullElse(criticalPerLevel, this.emptyMap);
-    }
-
-    public SkillAttribute getAttribute() {
-        return attribute;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public SkillTypes getType() {
-        return type;
-    }
-
-    public int getMaxLevel() {
-        return maxLevel;
-    }
-
-    public Map<Integer, Integer> getDamagePerLevel() {
-        return damagePerLevel;
-    }
-
-    public Map<Integer, Integer> getHealPerLevel() {
-        return healPerLevel;
-    }
-
-    public Map<Integer, Integer> getCostPerLevel() {
-        return costPerLevel;
-    }
-
-    public Map<Integer, Integer> getCooldownPerLevel() {
-        return cooldownPerLevel;
-    }
-
-    public Map<Integer, Integer> getDurationPerLevel() {
-        return durationPerLevel;
-    }
-
-    public Map<Integer, Integer> getRangePerLevel() {
-        return rangePerLevel;
-    }
-
-    public Map<Integer, Integer> getAccuracyPerLevel() {
-        return accuracyPerLevel;
-    }
-
-    public Map<Integer, Integer> getCriticalPerLevel() {
-        return criticalPerLevel;
     }
 }

@@ -4,8 +4,10 @@ import exception.common.NotEnoughQuantityException;
 import exception.common.QuantityUnderZeroException;
 import item.EquipmentBox;
 import item.enums.items.Equipments;
+import lombok.Getter;
 import status.enums.StatusType;
 
+@Getter
 public class UnitStatus {
     private BaseStatus baseStatus;
     private BaseStatus effectiveBaseStatus;
@@ -93,85 +95,16 @@ public class UnitStatus {
     public void useStatPoint(StatusType type, int quantity) {
         if (quantity > this.statPoint) throw new NotEnoughQuantityException("사용하려 하는 스텟포인트가 잔여 스테이터스 포인트보다 적습니다.");
         if (quantity <= 0) throw new QuantityUnderZeroException("사용하려 하는 스탯포인트는 1 이상이어야 합니다.");
-        BaseStatus newBaseStatus = BaseStatus.EMPTY_BASE_STATUS;
-        switch (type) {
-            case VIT:
-                newBaseStatus = new BaseStatus(quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case ARC:
-                newBaseStatus = new BaseStatus(0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case STR:
-                newBaseStatus = new BaseStatus(0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case STA:
-                newBaseStatus = new BaseStatus(0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case AGI:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case WIS:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case LUK:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0);
-                break;
-            case CHA:
-                newBaseStatus = new BaseStatus(0, 0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0);
-                break;
-        }
+        BaseStatus newBaseStatus = switch (type) {
+            case VIT -> new BaseStatus(quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            case ARC -> new BaseStatus(0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            case STR -> new BaseStatus(0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            case STA -> new BaseStatus(0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            case AGI -> new BaseStatus(0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            case WIS -> new BaseStatus(0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0, 0);
+            case LUK -> new BaseStatus(0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0, 0);
+            case CHA -> new BaseStatus(0, 0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0);
+        };
         this.baseStatus = this.baseStatus.add(newBaseStatus);
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getExp() {
-        return exp;
-    }
-
-    public int getStatPoint() {
-        return statPoint;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public int getMp() {
-        return mp;
-    }
-
-    public int getMaxMp() {
-        return maxMp;
-    }
-
-    public int getSp() {
-        return sp;
-    }
-
-    public int getMaxSp() {
-        return maxSp;
-    }
-
-    public int getWeight() {
-        return weight;
-    }
-
-    public int getMaxWeight() {
-        return maxWeight;
-    }
-
-    public BaseStatus getBaseStatus() {
-        return baseStatus;
-    }
-
-    public BaseStatus getEffectiveBaseStatus() {
-        return effectiveBaseStatus;
     }
 }

@@ -2,8 +2,10 @@ package item.enums.items;
 
 import item.enums.EquipTypes;
 import item.interfaces.Item;
+import lombok.Getter;
 import status.BaseStatus;
 
+@Getter
 public enum Equipments implements Item {
     // 각 장비 타입을 대표하는 아이템
     SWORD("검", "가장 대표적인 한손 무기.", 3.0, 50, EquipTypes.MAIN_HAND, new BaseStatus(0, 0, 1, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0)),
@@ -19,12 +21,12 @@ public enum Equipments implements Item {
     RING("반지", "특별한 힘을 부여하는 반지.", 0.1, 150, EquipTypes.FINGER, new BaseStatus(0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0)),
     ;
 
-    private String name;
-    private String info;
-    private double weight;
-    private int value;
-    private EquipTypes equipType;
-    private BaseStatus status;
+    private final String name;
+    private final String info;
+    private final double weight;
+    private final int value;
+    private final EquipTypes equipType;
+    private final BaseStatus status;
 
     Equipments(String name, String info, double weight, int value, EquipTypes equipType, BaseStatus status) {
         this.name = name;
@@ -33,33 +35,5 @@ public enum Equipments implements Item {
         this.value = value;
         this.equipType = equipType;
         this.status = status;
-    }
-
-    @Override
-    public String getName() {
-        return "";
-    }
-
-    @Override
-    public String getInfo() {
-        return "";
-    }
-
-    @Override
-    public int getValue() {
-        return 0;
-    }
-
-    @Override
-    public double getWeight() {
-        return 0;
-    }
-
-    public EquipTypes getEquipType() {
-        return equipType;
-    }
-
-    public BaseStatus getStatus() {
-        return status;
     }
 }

@@ -1,5 +1,8 @@
 package status;
 
+import lombok.Getter;
+
+@Getter
 public class BaseStatus {
     private final int vit; //vitality
     private final int arc; //arcane power
@@ -175,61 +178,5 @@ public class BaseStatus {
                 this.bonusMaxSp + other.bonusMaxSp,
                 this.bonusMaxWeight + other.bonusMaxWeight
         );
-    }
-
-    public int getVit() {
-        return vit;
-    }
-
-    public int getArc() {
-        return arc;
-    }
-
-    public int getStr() {
-        return str;
-    }
-
-    public int getSta() {
-        return sta;
-    }
-
-    public int getAgi() {
-        return agi;
-    }
-
-    public int getWis() {
-        return wis;
-    }
-
-    public int getLuk() {
-        return luk;
-    }
-
-    public int getCha() {
-        return cha;
-    }
-
-    public int getBonusMaxHp() {
-        return bonusMaxHp;
-    }
-
-    public int getBonusMaxMp() {
-        return bonusMaxMp;
-    }
-
-    public int getBonusMaxWeight() {
-        return bonusMaxWeight;
-    }
-
-    public int getBonusMaxSp() {
-        return bonusMaxSp;
-    }
-
-    public int getAtk() {
-        return atk;
-    }
-
-    public int getDef() {
-        return def;
     }
 }

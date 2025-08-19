@@ -1,7 +1,9 @@
 package skill;
 
 import exception.common.QuantityUnderZeroException;
+import lombok.Data;
 
+@Data
 public class SkillState {
     private int leftCooldownTime = 0;
     private int level = 1;
@@ -13,22 +15,6 @@ public class SkillState {
 
     public SkillState copy() {
         return new SkillState(leftCooldownTime, level);
-    }
-
-    public int getLeftCooldownTime() {
-        return leftCooldownTime;
-    }
-
-    public void setLeftCooldownTime(int leftCooldownTime) {
-        this.leftCooldownTime = leftCooldownTime;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public void addLevel(int quantity) {

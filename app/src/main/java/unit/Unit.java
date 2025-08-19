@@ -4,11 +4,13 @@ import item.EquipmentBox;
 import item.ItemBox;
 import item.enums.EquipTypes;
 import item.enums.items.Equipments;
+import lombok.Getter;
 import skill.SkillBox;
 import status.UnitStatus;
 import status.enums.UnitMutableStatusType;
 import unit.enums.UnitType;
 
+@Getter
 public class Unit {
     private final UnitType type;
     private final String name;
@@ -89,27 +91,4 @@ public class Unit {
         }
     }
 
-    public UnitType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ItemBox getItemBox() {
-        return itemBox;
-    }
-
-    public EquipmentBox getEquipmentBox() {
-        return equipmentBox;
-    }
-
-    public SkillBox getSkillBox() {
-        return skillBox;
-    }
-
-    public UnitStatus getUnitStatus() {
-        return unitStatus;
-    }
 }

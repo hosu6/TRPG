@@ -5,6 +5,7 @@ import exception.common.QuantityUnderZeroException;
 import exception.item.AccessNotExistItemBoxException;
 import item.enums.items.*;
 import item.interfaces.Item;
+import lombok.Getter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,27 +20,23 @@ class ItemBoxTest {
         itemBox = new ItemBox();
     }
 
+    @Getter
     private enum TestItem implements Item {
-        ITEM1, ITEM2, ITEM3;
+        ITEM1("item1", "item1 info", 1.0, 1),
+        ITEM2("item2", "item2 info", 10.0, 10),
+        ITEM3("item3", "item3 info", 100.0, 100),
+        ;
+        private final String name;
+        private final String info;
+        private final double weight;
+        private final int value;
+        private final int quantity = 100;
 
-        @Override
-        public String getName() {
-            return "";
-        }
-
-        @Override
-        public String getInfo() {
-            return "";
-        }
-
-        @Override
-        public int getValue() {
-            return 0;
-        }
-
-        @Override
-        public double getWeight() {
-            return 0;
+        TestItem(String name, String info, double weight, int value) {
+            this.name = name;
+            this.info = info;
+            this.weight = weight;
+            this.value = value;
         }
     }
 
