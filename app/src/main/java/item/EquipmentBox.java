@@ -84,6 +84,10 @@ public class EquipmentBox {
 
     @Override
     public String toString() {
-        return "장착한 아이템들 출력 " + equipmentBox;
+        StringBuilder result = new StringBuilder();
+        for (Equipments equipment : equipmentBox.values()) {
+            result.append(equipment.getName()).append(" ");
+        }
+        return result.toString();
     }
 }

@@ -6,6 +6,8 @@ import exception.skill.AccessNotExistSkillException;
 import exception.skill.UseSkillOnCoolTimeException;
 import exception.skill.UseSkillWithNotEnoughMpException;
 import exception.skill.UseSkillWithNotEnoughSpException;
+import lombok.Getter;
+import play.Play;
 import skill.enums.SkillTypes;
 import skill.enums.Skills;
 import status.BaseStatus;
@@ -15,6 +17,7 @@ import unit.Unit;
 import java.util.HashMap;
 import java.util.HashSet;
 
+@Getter
 public class SkillBox {
 
     private final HashMap<Skills, SkillState> skillBox;
@@ -44,6 +47,12 @@ public class SkillBox {
         return new SkillBox(clonedSkillBox);
     }
 
+    public Skills getAvailableSkillByKey(String key) {
+        Skills skills = Skills.getSkillByKey(key);
+        if (skillBox.containsKey(skills) && skillBox.get(skills).getLeftCooldownTime() == 0) return skills;
+        return Skills.INVALID;
+    }
+
     public void gainLevelUpSkillPoint() {
         skillPoint += 3;
     }
@@ -67,6 +76,7 @@ public class SkillBox {
             case MAGIC:
                 damage += casterEffectiveBaseStatus.getAtk() + casterEffectiveBaseStatus.getWis() - targetEffectiveBaseStatus.getArc() - targetEffectiveBaseStatus.getDef();
         }
+        if (damage < 0) damage = 0;
         return damage;
     }
 
@@ -89,6 +99,11 @@ public class SkillBox {
         throw new AccessNotExistSkillException(caster.getName() + "은 현재 실행할 수 있는 스킬이 존재하지 않는다");
     }
 
+    public void useSkill(String skill, Unit caster, Unit target) {
+        Skills s = Skills.getSkillByKey(skill);
+        useSkill(s, caster, target);
+    }
+
     public void useSkill(Skills skill, Unit caster, Unit target) {
         if (onCooldownSkills.contains(skill)) throw new UseSkillOnCoolTimeException("아직 쿨다운 중인 스킬이라 사용이 불가능합니다.");
         SkillState skillState = skillBox.get(skill);
@@ -109,11 +124,16 @@ public class SkillBox {
         switch (skill.getType()) {
             case DAMAGE:
                 int damage = calculateDamage(skill, caster, target);
-                targetUnitStatus.changeHp(-1 * damage);
+                int targetHp = targetUnitStatus.changeHp(-1 * damage);
+                Play.println(caster + "이/가 " + target + "에게 " + damage + "만큼의 데미지를 입혔습니다.");
+                if (targetHp <= 0) {
+                    Play.println(target + "이/가 죽었습니다.");
+                }
                 break;
             case HEAL:
                 int heal = calculateHeal(skill, caster, target);
-                targetUnitStatus.changeMp(heal);
+                targetUnitStatus.changeHp(heal);
+                Play.println(caster + "이/가 " + target + "에게 " + heal + "만큼의 HP를 회복했습니다.");
                 break;
             case BUFF:
                 break;
@@ -125,5 +145,32 @@ public class SkillBox {
             skillState.setLeftCooldownTime(cooldown);
             onCooldownSkills.add(skill);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (HashMap.Entry<Skills, SkillState> entry : skillBox.entrySet()) {
+            result.append(entry.getKey().getName()).append("(").append(entry.getKey().getKey()).append(")");
+            result.append(" 레벨:").append(entry.getValue().getLevel());
+            result.append(" 남은 쿨다운:").append(entry.getValue().getLeftCooldownTime()).append(", ");
+        }
+        return result.toString();
+    }
+
+    public String availableSkillToString() {
+        StringBuilder result = new StringBuilder();
+        for (HashMap.Entry<Skills, SkillState> entry : skillBox.entrySet()) {
+            if (entry.getValue().getLeftCooldownTime() == 0) {
+                result.append(entry.getKey().getName())
+                        .append("(").append(entry.getKey().getKey()).append(") ")
+                        .append("레벨:").append(entry.getValue().getLevel()).append("\n");
+            }
+        }
+        return result.toString();
+    }
+
+    public int size() {
+        return skillBox.size();
     }
 }

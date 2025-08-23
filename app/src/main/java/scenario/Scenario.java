@@ -1,24 +1,20 @@
 package scenario;
 
+import lombok.Getter;
+
+@Getter
 public class Scenario {
-    protected Scenario nextScenario;
     protected String name;
     protected String description;
     protected Runnable runnableScenario;
 
-    public Scenario() {
-        this(null, "", "", null);
-    }
-
-    public Scenario(Scenario nextScenario, String name, String description, Runnable runnableScenario) {
-        this.nextScenario = nextScenario;
+    public Scenario(String name, String description, Runnable runnableScenario) {
         this.name = name;
         this.description = description;
         this.runnableScenario = runnableScenario;
     }
 
-    public Scenario executeAndGetNextScenario() {
+    public void run() {
         runnableScenario.run();
-        return nextScenario;
     }
 }

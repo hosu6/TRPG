@@ -1,15 +1,14 @@
 package scenario.scenarioList;
 
+import play.Play;
+import play.PlayStatus;
 import scenario.Scenario;
 
 public class DeadScenario extends Scenario {
     public DeadScenario() {
-        super();
-        name = "사망 종료";
-        description = "";
-        runnableScenario = () -> {
-            System.out.println("플레이어가 사망하였습니다.");
-            nextScenario = new EndScenario();
-        };
+        super("DeadScenario", "플레이 사망 시나리오", () -> {
+            Play.println("플레이어가 전부 사망하였습니다.");
+            PlayStatus.scenariosOnReady.push(new EndScenario());
+        });
     }
 }

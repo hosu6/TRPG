@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 @Getter
 public enum Skills {
-    BASIC_ATTACK("기본공격", "기본공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
+    BASIC_ATTACK("기본공격", "basic_attack", "기본공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
             createUnmodifiableMap(10, i -> i),
             createUnmodifiableMap(10, i -> 0),
             createUnmodifiableMap(10, i -> 0),
@@ -19,7 +19,7 @@ public enum Skills {
             createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 1)),
-    HARD_ATTACK("강타", "무기를 강하게 사용하는 공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
+    HARD_ATTACK("강타", "hard_attack", "무기를 강하게 사용하는 공격", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 10,
             createUnmodifiableMap(10, i -> 2 * i),
             createUnmodifiableMap(10, i -> 0),
             createUnmodifiableMap(10, i -> i),
@@ -28,7 +28,7 @@ public enum Skills {
             createUnmodifiableMap(10, i -> 2),
             createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 1)),
-    BREATH("브레스공격", "강렬한 화염을 내뿜는 용의 숨결", SkillTypes.DAMAGE, SkillAttribute.MAGIC, 10,
+    BREATH("브레스공격", "breath", "강렬한 화염을 내뿜는 용의 숨결", SkillTypes.DAMAGE, SkillAttribute.MAGIC, 10,
             createUnmodifiableMap(10, i -> 10 * i),
             createUnmodifiableMap(10, i -> 0),
             createUnmodifiableMap(10, i -> 5 * i),
@@ -36,8 +36,17 @@ public enum Skills {
             createUnmodifiableMap(10, i -> 1),
             createUnmodifiableMap(10, i -> 5 * i),
             createUnmodifiableMap(10, i -> 5 * i),
-            createUnmodifiableMap(10, i -> 5 * i)
-    );
+            createUnmodifiableMap(10, i -> 5 * i)),
+    INVALID("무효", "invalid", "무효한 스킬", SkillTypes.DAMAGE, SkillAttribute.PHYSICAL, 0,
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0),
+            createUnmodifiableMap(10, i -> 0)),
+    ;
 
     private static Map<Integer, Integer> createUnmodifiableMap(int maxLevel, Function<Integer, Integer> valueMapper) {
         return IntStream.rangeClosed(1, maxLevel)
@@ -46,6 +55,7 @@ public enum Skills {
     }
 
     private final String name;
+    private final String key;
     private final String description;
     private final SkillTypes type;
     private final SkillAttribute attribute;
@@ -59,9 +69,17 @@ public enum Skills {
     private final Map<Integer, Integer> accuracyPerLevel;
     private final Map<Integer, Integer> criticalPerLevel;
     private final Map<Integer, Integer> emptyMap;
+    private static final Map<String, Skills> skills = new java.util.HashMap<>();
 
-    Skills(String name, String description, SkillTypes type, SkillAttribute attribute, int maxLevel, Map<Integer, Integer> damagePerLevel, Map<Integer, Integer> healPerLevel, Map<Integer, Integer> costPerLevel, Map<Integer, Integer> cooldownPerLevel, Map<Integer, Integer> durationPerLevel, Map<Integer, Integer> rangePerLevel, Map<Integer, Integer> accuracyPerLevel, Map<Integer, Integer> criticalPerLevel) {
+    static {
+        for (Skills skill : Skills.values()) {
+            skills.put(skill.getKey(), skill);
+        }
+    }
+
+    Skills(String name, String key, String description, SkillTypes type, SkillAttribute attribute, int maxLevel, Map<Integer, Integer> damagePerLevel, Map<Integer, Integer> healPerLevel, Map<Integer, Integer> costPerLevel, Map<Integer, Integer> cooldownPerLevel, Map<Integer, Integer> durationPerLevel, Map<Integer, Integer> rangePerLevel, Map<Integer, Integer> accuracyPerLevel, Map<Integer, Integer> criticalPerLevel) {
         this.name = name;
+        this.key = key;
         this.description = description;
         this.type = type;
         this.attribute = attribute;
@@ -77,5 +95,10 @@ public enum Skills {
         this.rangePerLevel = Objects.requireNonNullElse(rangePerLevel, this.emptyMap);
         this.accuracyPerLevel = Objects.requireNonNullElse(accuracyPerLevel, this.emptyMap);
         this.criticalPerLevel = Objects.requireNonNullElse(criticalPerLevel, this.emptyMap);
+    }
+
+    public static Skills getSkillByKey(String key) {
+        if (skills.containsKey(key)) return skills.get(key);
+        return INVALID;
     }
 }

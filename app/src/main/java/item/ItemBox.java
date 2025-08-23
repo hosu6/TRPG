@@ -5,6 +5,7 @@ import exception.common.QuantityUnderZeroException;
 import exception.item.AccessNotExistItemBoxException;
 import item.enums.items.*;
 import item.interfaces.Item;
+import play.Play;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class ItemBox {
 
     public void printAllItems() {
         for (Map.Entry<Class<? extends Item>, Map<Item, Integer>> entry : itemBoxes.entrySet()) {
-            System.out.println(entry.getKey().getSimpleName() + " : " + entry.getValue());
+            Play.println(entry.getKey().getSimpleName() + " : " + entry.getValue());
         }
     }
 

@@ -26,7 +26,7 @@ public class UnitStatus {
     private static final int mpMultiple = 10; //1 arc = 10 maxMp;
     private static final int spMultiple = 10; //1 sta = 10 maxSp;
     private static final int weightMultiple = 10; //1 str = 10 maxWeight;
-    private static final int maxExp = 100; //레벨업에 필요한 경험치
+    public static final int maxExp = 100; //레벨업에 필요한 경험치
 
     public UnitStatus(BaseStatus baseStatus, int level) {
         this.baseStatus = baseStatus;
@@ -61,10 +61,11 @@ public class UnitStatus {
     }
 
 
-    public void changeHp(int hpChange) {
+    public int changeHp(int hpChange) {
         this.hp += hpChange;
         if (this.hp > this.maxHp) this.hp = this.maxHp;
         if (this.hp < 0) this.hp = 0;
+        return this.hp;
     }
 
     public void changeMp(int mpChange) {
@@ -106,5 +107,11 @@ public class UnitStatus {
             case CHA -> new BaseStatus(0, 0, 0, 0, 0, 0, 0, quantity, 0, 0, 0, 0, 0, 0);
         };
         this.baseStatus = this.baseStatus.add(newBaseStatus);
+    }
+
+    public void healAllHpMpSp() {
+        this.hp = this.maxHp;
+        this.mp = this.maxMp;
+        this.sp = this.maxSp;
     }
 }
